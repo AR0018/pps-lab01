@@ -1,14 +1,12 @@
 import example.model.AccountHolder;
-import example.model.BankAccount;
 import example.model.BankAccountWithFee;
-import example.model.SimpleBankAccount;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import util.BankAccountTester;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-// TODO: WRITE THE TESTS (LIMITING REPETITION)
 public class BankAccountWithFeeTest {
+
+    private static final int WITHDRAW_FEE = 1;
 
     private BankAccountTester tester;
     private final AccountHolder accountHolder =
@@ -31,7 +29,7 @@ public class BankAccountWithFeeTest {
     @Test
     void testInitialBalanceLowerThanMinimum() {
         tester = new BankAccountTester(
-                new SimpleBankAccount(
+                new BankAccountWithFee(
                         accountHolder,
                         BankAccountTester.INITIAL_AMOUNT - 1
                 ), accountHolder);
@@ -50,7 +48,8 @@ public class BankAccountWithFeeTest {
 
     @Test
     void testWithdraw() {
-        tester.testWithdraw(BankAccountTester.DEPOSIT_AMOUNT - BankAccountTester.WITHDRAW_AMOUNT);
+        tester.testWithdraw(
+                BankAccountTester.DEPOSIT_AMOUNT - BankAccountTester.WITHDRAW_AMOUNT - WITHDRAW_FEE);
     }
 
     @Test
