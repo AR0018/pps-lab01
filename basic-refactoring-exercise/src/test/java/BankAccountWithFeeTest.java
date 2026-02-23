@@ -1,16 +1,14 @@
 import example.model.AccountHolder;
 import example.model.BankAccount;
+import example.model.BankAccountWithFee;
 import example.model.SimpleBankAccount;
-
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import util.BankAccountTester;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-/**
- * The test suite for testing the SimpleBankAccount implementation
- */
-class SimpleBankAccountTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+// TODO: WRITE THE TESTS (LIMITING REPETITION)
+public class BankAccountWithFeeTest {
 
     private BankAccountTester tester;
     private final AccountHolder accountHolder =
@@ -19,7 +17,7 @@ class SimpleBankAccountTest {
     @BeforeEach
     void beforeEach(){
         tester = new BankAccountTester(
-                new SimpleBankAccount(
+                new BankAccountWithFee(
                         accountHolder,
                         BankAccountTester.INITIAL_AMOUNT
                 ), accountHolder);
