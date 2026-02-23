@@ -30,34 +30,40 @@ class SimpleBankAccountTest {
     void testInitialBalance() {
         assertEquals(INITIAL_AMOUNT, bankAccount.getBalance());
     }
+    
+    @Test
+    void testInitialBalanceLowerThanMinimum() {
+        bankAccount = new SimpleBankAccount(accountHolder, INITIAL_AMOUNT - 1);
+        assertEquals(INITIAL_AMOUNT, bankAccount.getBalance());
+    }
 
-    private void depositTestAmount() {
-        bankAccount.deposit(accountHolder.id(), DEPOSIT_AMOUNT);
+    private void depositTestAmount(final int amount) {
+        bankAccount.deposit(accountHolder.id(), amount);
     }
 
     @Test
     void testDeposit() {
-        depositTestAmount();
+        depositTestAmount(DEPOSIT_AMOUNT);
         assertEquals(DEPOSIT_AMOUNT, bankAccount.getBalance());
     }
 
     @Test
     void testWrongDeposit() {
-        depositTestAmount();
+        depositTestAmount(DEPOSIT_AMOUNT);
         bankAccount.deposit(WRONG_ID, WRONG_DEPOSIT_AMOUNT);
         assertEquals(DEPOSIT_AMOUNT, bankAccount.getBalance());
     }
 
     @Test
     void testWithdraw() {
-        depositTestAmount();
+        depositTestAmount(DEPOSIT_AMOUNT);
         bankAccount.withdraw(accountHolder.id(), WITHDRAW_AMOUNT);
         assertEquals(DEPOSIT_AMOUNT - WITHDRAW_AMOUNT, bankAccount.getBalance());
     }
 
     @Test
     void testWrongWithdraw() {
-        depositTestAmount();
+        depositTestAmount(DEPOSIT_AMOUNT);
         bankAccount.withdraw(WRONG_ID, WITHDRAW_AMOUNT);
         assertEquals(DEPOSIT_AMOUNT, bankAccount.getBalance());
     }

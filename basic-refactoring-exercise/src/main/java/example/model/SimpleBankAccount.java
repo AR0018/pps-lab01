@@ -10,9 +10,11 @@ public class SimpleBankAccount implements BankAccount {
     private double balance;
     private final AccountHolder holder;
 
+    private static final int MINIMUM_AMOUNT = 0;
+
     public SimpleBankAccount(final AccountHolder holder, final double balance) {
         this.holder = holder;
-        this.balance = balance;
+        this.balance = Math.max(balance, MINIMUM_AMOUNT);
     }
 
     @Override
