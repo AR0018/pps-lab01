@@ -52,7 +52,7 @@ class SimpleBankAccountTest {
     }
 
     @Test
-    void testWrongDeposit() {
+    void testDepositWrongID() {
         depositTestAmount(DEPOSIT_AMOUNT);
         bankAccount.deposit(WRONG_ID, WRONG_DEPOSIT_AMOUNT);
         assertCorrectBalance(DEPOSIT_AMOUNT);
@@ -66,9 +66,35 @@ class SimpleBankAccountTest {
     }
 
     @Test
-    void testWrongWithdraw() {
+    void testWithdrawWrongID() {
         depositTestAmount(DEPOSIT_AMOUNT);
         bankAccount.withdraw(WRONG_ID, WITHDRAW_AMOUNT);
+        assertCorrectBalance(DEPOSIT_AMOUNT);
+    }
+
+    @Test
+    void testWithdrawWithEmptyBalance() {
+        bankAccount.withdraw(accountHolder.id(), WITHDRAW_AMOUNT);
+        assertCorrectBalance(INITIAL_AMOUNT);
+    }
+
+    @Test
+    void testWithdrawWithNotEnoughBalance() {
+        bankAccount.deposit(accountHolder.id(), DEPOSIT_AMOUNT);
+        bankAccount.withdraw(accountHolder.id(), DEPOSIT_AMOUNT + 1);
+        assertCorrectBalance(DEPOSIT_AMOUNT);
+    }
+
+    @Test
+    void testDepositWithNegativeAmount() {
+        bankAccount.deposit(accountHolder.id(), -DEPOSIT_AMOUNT);
+        assertCorrectBalance(INITIAL_AMOUNT);
+    }
+
+    @Test
+    void testWithdrawWithNegativeAmount() {
+        bankAccount.deposit(accountHolder.id(), DEPOSIT_AMOUNT);
+        bankAccount.withdraw(accountHolder.id(), -WITHDRAW_AMOUNT);
         assertCorrectBalance(DEPOSIT_AMOUNT);
     }
 }
